@@ -1,0 +1,24 @@
+<윈도우 iis>
+
+C: 폴더에 Docker 폴더 생성
+
+C:/Docker에 notepad로 작성한 Dockerfile 저장
+
+FROM mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+
+WORKDIR C:\\Inetpub\\wwwroot
+
+EXPOSE 80/tcp
+EXPOSE 443/tcp
+
+cd C:\Docker
+
+docker build -t window:iis .
+
+docker images
+
+docker run -d --name window_iis -p 80:80 window:iis
+
+docker ps
+
+docker update --restart=always 컨테이너ID

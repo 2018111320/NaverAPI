@@ -1,0 +1,60 @@
+*도커 설치
+*net-tools 설치
+
+[Dockerfile 작성]
+sudo vim Dockerfile
+
+FROM python:3.8
+
+WORKDIR /app
+
+COPY app.py /app
+
+RUN pip install flask
+
+CMD ["python3", "app.py"]
+
+[app.py 작성]
+sudo vim app.py
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+
+def main():
+    return "Hello World"
+
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0", port=5001)
+
+도커 이미지 빌드
+sudo docker build -t linux:flask .
+
+sudo docker images
+
+도커 실행
+sudo docker run -d --name linux_flask -p 5001:5001 linux:flask
+
+sudo docker ps
+
+netstat -tnlp
+
+[도커 자동 실행 서비스 작성]
+sudo vi /etc/systemd/system/linux_flask.service
+
+[Unit]
+Wants=docker.service
+After=docker.service
+
+[Service]
+RemainAfterExit=yes
+ExecStart=/usr/bin/docker start linux_flask
+ExecStop=/usr/bin/docker stop linux_flask
+
+[Install]
+WantedBy=multi-user.target
+
+도커 자동 실행 서비스 활성화
+sudo systemctl enable linux_flask.service

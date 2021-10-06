@@ -1,0 +1,27 @@
+<윈도우 도커(윈도우 컨테이너)>
+Docker-Microsoft PackageManagement Provider 설치
+Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
+
+최신 도커 설치
+Install-Package -Name docker -ProviderName DockerMsftProvider
+
+재부팅
+Restart-Computer -Force
+
+설치된 버전 확인
+Get-Package -Name Docker -ProviderName DockerMsftProvider
+
+현재 버전 검색
+Find-Package -Name Docker -ProviderName DockerMsftProvider
+
+업그레이드
+Install-Package -Name Docker -ProviderName DockerMsftProvider -Update -Force
+
+도커 실행
+Start-Service Docker
+
+* 이 뒤부터 할 일 중에 web이랑 was에서 Dockerfile, app.py 작성할 때 주의사항
+notepad로 작성할 때 무조건 save as type = all files(*)로 설정해서 저장
+Dockerfile은 이 작업할때 두 단계로 하기 -> 타입설정하고 이름은 Dockerfile.dockerfile로 먼저 저장
+-> 폴더로 돌아가서 rename으로 뒤에 .dockerfile 지우기
+app.py는 타입 설정하고 app.py로 저장하면 한번에 가능!
